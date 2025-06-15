@@ -49,6 +49,11 @@ class LoginPage {
       for (const selector of successIndicators) {
         try {
           await this.page.waitForSelector(selector, { timeout: 5000 });
+          // Take screenshot when login is successful
+          await this.page.screenshot({
+            path: "screenshots/login-success.png",
+            fullPage: true,
+          });
           return true;
         } catch (e) {
           continue;
@@ -57,7 +62,15 @@ class LoginPage {
 
       // If none of the indicators are found, check if we're on the account page
       const currentUrl = this.page.url();
-      return currentUrl.includes("/customer/account/");
+      if (currentUrl.includes("/customer/account/")) {
+        // Take screenshot when on account page
+        await this.page.screenshot({
+          path: "screenshots/login-success.png",
+          fullPage: true,
+        });
+        return true;
+      }
+      return false;
     } catch (error) {
       console.error("Login verification error:", error);
       return false;

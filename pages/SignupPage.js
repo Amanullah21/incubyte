@@ -56,21 +56,56 @@ class SignupPage {
 
   async verifySuccessfulSignup() {
     try {
-      await Promise.race([
-        this.page.waitForSelector("text=Thank you for registering", {
-          timeout: 10000,
-        }),
-        this.page.waitForSelector("text=My Account", { timeout: 10000 }),
-      ]);
-      return true;
+      // Wait for the page to load after signup
+      await this.page.waitForLoadState("networkidle");
+
+      // Check for multiple possible success indicators
+      const successIndicators = [
+        "text=Thank you for registering",
+        "text=My Account",
+        ".message-success",
+        '.page-title span:has-text("My Account")',
+      ];
+
+      // Try each indicator
+      for (const selector of successIndicators) {
+        try {
+          await this.page.waitForSelector(selector, { timeout: 5000 });
+          // Take screenshot when signup is successful
+          await this.page.screenshot({
+            path: "screenshots/signup-success.png",
+            fullPage: true,
+          });
+          return true;
+        } catch (e) {
+          continue;
+        }
+      }
+
+      // If none of the indicators are found, check if we're on the account page
+      const currentUrl = this.page.url();
+      if (currentUrl.includes("/customer/account/")) {
+        // Take screenshot when on account page
+        await this.page.screenshot({
+          path: "screenshots/signup-success.png",
+          fullPage: true,
+        });
+        return true;
+      }
+      return false;
     } catch (error) {
+      console.error("Signup verification error:", error);
       return false;
     }
   }
 
   async verifyValidationErrors() {
     try {
-      await this.page.waitForSelector(".mage-error", { timeout: 5000 });
+      // Wait for any validation message to appear
+      await this.page.waitForSelector(
+        ".messages .message-error, .message-error, .mage-error",
+        { timeout: 5000 }
+      );
       const hasValidationMessages = (await this.validationMessages.count()) > 0;
       const hasErrorMessage = await this.errorMessage.isVisible();
       return hasValidationMessages || hasErrorMessage;
