@@ -57,7 +57,7 @@ Given("I am on the signup page", async function () {
 When("I enter valid first name {string}", async function (firstName) {
   await signupPage.firstName.fill(firstName);
 });
-̀
+
 When("I enter valid last name {string}", async function (lastName) {
   await signupPage.lastName.fill(lastName);
 });

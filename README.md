@@ -1,20 +1,27 @@
-# Magento E-commerce Test Automation Framework
+# Magento E-commerce Test Automation
 
 This project contains automated tests for the Magento e-commerce platform using Playwright and Cucumber. The framework focuses on testing user registration and login functionality with a robust set of test scenarios.
 
 ## 🚀 Features
 
-- **BDD Testing**: Uses Cucumber for Behavior-Driven Development
-- **Modern Testing Stack**: Built with Playwright for reliable end-to-end testing
-- **Comprehensive Test Coverage**: Tests for both happy paths and edge cases
-- **Visual Verification**: Automatic screenshot capture for debugging
-- **Video Recording**: Test execution videos for better debugging
-- **Detailed Reporting**: Cucumber HTML reports for test results
+- **User Registration Testing**
+
+  - Valid registration flow
+  - Invalid email format validation
+  - Password strength validation
+  - Required field validation
+  - Duplicate email validation
+
+- **Login Testing**
+  - Valid login flow
+  - Invalid credentials handling
+  - Empty field validation
+  - Error message verification
 
 ## 📋 Prerequisites
 
 - Node.js (v14 or higher)
-- npm (v6 or higher)
+- npm or yarn
 - Git
 
 ## 🛠️ Installation
@@ -22,7 +29,7 @@ This project contains automated tests for the Magento e-commerce platform using 
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone [repository-url]
 cd magento-playwright-tests
 ```
 
@@ -32,115 +39,151 @@ cd magento-playwright-tests
 npm install
 ```
 
-## 🏗️ Project Structure
+## 🏃‍♂️ Running Tests
 
-```
-magento-playwright-tests/
-├── features/
-│   ├── step_definitions/
-│   │   ├── loginSteps.js
-│   │   └── signupSteps.js
-│   ├── login.feature
-│   └── signup.feature
-├── pages/
-│   ├── LoginPage.js
-│   └── SignupPage.js
-├── screenshots/
-├── videos/
-├── package.json
-└── README.md
-```
-
-## 🧪 Test Scenarios
-
-### Signup Tests
-
-- Successful account creation
-- Validation for existing email
-- Invalid email format validation
-- Password mismatch validation
-- Weak password validation
-- Empty field validation
-- Required field validation
-
-### Login Tests
-
-- Successful login
-- Invalid credentials
-- Empty field validation
-- Remember me functionality
-- Forgot password flow
-
-## 🚀 Running Tests
-
-1. Run all tests:
+### Run All Tests
 
 ```bash
 npx cucumber-js
 ```
 
-2. Run specific feature:
+### Run Specific Feature
 
 ```bash
-npx cucumber-js --tags @signup
+# Run only login tests
+npx cucumber-js features/login.feature
+
+# Run only signup tests
+npx cucumber-js features/signup.feature
+```
+
+### Run with Tags
+
+```bash
+# Run tests with specific tag
 npx cucumber-js --tags @login
 ```
 
-3. Run with specific browser:
+## 📁 Project Structure
 
-```bash
-npx cucumber-js --tags @signup --world-parameters '{"browser":"firefox"}'
+```
+magento-playwright-tests/
+├── features/
+│   ├── login.feature
+│   └── signup.feature
+├── features/
+│   └── step_definitions/
+│       ├── loginSteps.js
+│       └── signupSteps.js
+├── pages/
+│   ├── LoginPage.js
+│   └── SignupPage.js
+├── test-data/
+│   └── users.json
+├── screenshots/
+├── videos/
+└── reports/
 ```
 
-## 📸 Screenshots and Videos
+## 📝 Test Case Management
 
-- Screenshots are automatically captured for:
-  - Successful signup/login
-  - Validation errors
-  - Navigation errors
-- Test execution videos are saved in the `videos/` directory
+### Test Data
 
-## 🔧 Configuration
+- Test data is stored in `test-data/users.json`
+- Update this file with valid test credentials
 
-### Timeouts
+### Test Reports
 
-- Default timeout: 60 seconds
-- Navigation timeout: 30 seconds
-- Element wait timeout: 10 seconds
+After running tests, you can find:
 
-### Browser Settings
+- Screenshots: `screenshots/` directory
+- Video recordings: `videos/` directory
+- HTML Reports: `reports/cucumber-report.html`
 
-- Headless mode: Disabled by default
-- Viewport: 1280x720
-- Video recording: Enabled
+## 🔍 Test Scenarios
 
-## 📝 Test Data
+### Login Scenarios
 
-The framework uses dynamic test data:
+1. Valid Login
 
-- Unique email generation for each test run
-- Standard test credentials
-- Validation test cases
+   - Enter valid credentials
+   - Verify successful login
+   - Check dashboard access
 
-## 🔍 Debugging
+2. Invalid Login
+   - Enter invalid credentials
+   - Verify error message
+   - Check error handling
 
-1. Check screenshots in the `screenshots/` directory
-2. Review test execution videos in the `videos/` directory
-3. View Cucumber HTML reports
-4. Check console logs for detailed error messages
+### Registration Scenarios
+
+1. Valid Registration
+
+   - Enter valid user details
+   - Verify successful registration
+   - Check account creation
+
+2. Invalid Registration
+   - Enter invalid email format
+   - Test password requirements
+   - Verify validation messages
+
+## 🐛 Troubleshooting
+
+If you encounter issues:
+
+1. **Browser Issues**
+
+   - Ensure Playwright browsers are installed:
+
+   ```bash
+   npx playwright install
+   ```
+
+2. **Test Failures**
+
+   - Check screenshots in `screenshots/` directory
+   - Review video recordings in `videos/` directory
+   - Verify test data in `test-data/users.json`
+
+3. **Common Errors**
+   - "Invalid Form Key": Refresh the page and retry
+   - "Element not found": Check selectors in page objects
+   - "Timeout": Increase timeout in cucumber.js
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Create a new branch for your changes
+2. Write clear test scenarios
+3. Update test data if needed
+4. Run tests to verify changes
+5. Submit a pull request
 
-## 📄 License
+## 📚 Best Practices
 
-This project is licensed under the MIT License - see the LICENSE file for details
+1. **Test Data Management**
 
-## 👥 Authors
+   - Keep test data in `test-data/` directory
+   - Use realistic test data
+   - Avoid hardcoding credentials
 
-## Md Amanullah
+2. **Page Objects**
+
+   - Maintain selectors in page objects
+   - Keep page objects updated
+   - Use meaningful method names
+
+3. **Test Structure**
+   - Write clear scenario descriptions
+   - Use appropriate tags
+   - Follow Gherkin syntax
+
+## 🔒 Security
+
+- Never commit sensitive data
+- Use environment variables for credentials
+- Keep test data separate from code
+
+## 📞 Support
+
+ - 7070476900
