@@ -39,6 +39,59 @@ cd magento-playwright-tests
 npm install
 ```
 
+## 📊 Generating Test Sheets
+
+### Method 1: Using Google Sheets
+
+1. Create a new Google Sheet
+2. Add the following columns:
+   - Test Case ID
+   - Test Scenario
+   - Test Steps
+   - Test Data
+   - Expected Result
+   - Status
+3. Copy the test scenarios from your feature files
+4. Save the sheet and share with your team
+
+### Method 2: Using Excel/CSV
+
+1. Create a new Excel file or CSV
+2. Add the same columns as above
+3. Export as CSV to `test-cases/` directory
+4. Name format: `[feature-name]-test-cases.csv`
+
+### Method 3: Using Test Case Generator Script
+
+1. Install required dependencies:
+
+```bash
+npm install @cucumber/gherkin @cucumber/messages --save-dev
+```
+
+2. Run the generator script:
+
+```bash
+node scripts/generate-test-cases.js
+```
+
+3. The script will:
+   - Read all `.feature` files
+   - Generate test cases automatically
+   - Create CSV files in `test-cases/` directory
+   - Name format: `[feature-name]-test-cases.csv`
+
+### Test Case Format Example
+
+```csv
+Test Case ID,Test Scenario,Test Steps,Test Data,Expected Result,Status
+TC001,Valid Login,1. Navigate to login page
+2. Enter valid email
+3. Enter valid password
+4. Click login button,Email: test@example.com
+Password: Test123!,User should be redirected to dashboard,Not Run
+```
+
 ## 🏃‍♂️ Running Tests
 
 ### Run All Tests
@@ -80,6 +133,9 @@ magento-playwright-tests/
 │   └── SignupPage.js
 ├── test-data/
 │   └── users.json
+├── test-cases/
+│   ├── login-test-cases.csv
+│   └── signup-test-cases.csv
 ├── screenshots/
 ├── videos/
 └── reports/
@@ -151,39 +207,6 @@ If you encounter issues:
    - "Element not found": Check selectors in page objects
    - "Timeout": Increase timeout in cucumber.js
 
-## 🤝 Contributing
-
-1. Create a new branch for your changes
-2. Write clear test scenarios
-3. Update test data if needed
-4. Run tests to verify changes
-5. Submit a pull request
-
-## 📚 Best Practices
-
-1. **Test Data Management**
-
-   - Keep test data in `test-data/` directory
-   - Use realistic test data
-   - Avoid hardcoding credentials
-
-2. **Page Objects**
-
-   - Maintain selectors in page objects
-   - Keep page objects updated
-   - Use meaningful method names
-
-3. **Test Structure**
-   - Write clear scenario descriptions
-   - Use appropriate tags
-   - Follow Gherkin syntax
-
-## 🔒 Security
-
-- Never commit sensitive data
-- Use environment variables for credentials
-- Keep test data separate from code
-
 ## 📞 Support
 
- - 7070476900
+- 7070476900
