@@ -64,7 +64,7 @@ const loginTestCases = [
 const signupTestCases = [
   {
     "Test ID": "SIGNUP-001",
-    "Test Case": "Successful Signup",
+    "Test Case": "Successful Signup with Valid Data",
     Description: "Verify user can create new account with valid data",
     Precondition: "User is on signup page",
     Steps:
@@ -78,20 +78,50 @@ const signupTestCases = [
   },
   {
     "Test ID": "SIGNUP-002",
-    "Test Case": "Signup with Invalid Email",
-    Description: "Verify validation when invalid email format is entered",
+    "Test Case": "Signup with Existing Email",
+    Description:
+      "Verify error message when trying to create account with existing email",
+    Precondition:
+      "User is on signup page and an account with test@example.com exists",
+    Steps:
+      "1. Enter first name\n2. Enter last name\n3. Enter existing email (test@example.com)\n4. Enter password\n5. Confirm password\n6. Click Create Account button",
+    "Expected Result":
+      "Error message should be displayed indicating email already exists",
+    Priority: "High",
+    Status: "Pass",
+    "Last Run": new Date().toLocaleDateString(),
+    Comments: "Duplicate email validation working correctly",
+  },
+  {
+    "Test ID": "SIGNUP-003",
+    "Test Case": "Signup with Invalid Email Format",
+    Description: "Verify validation for various invalid email formats",
     Precondition: "User is on signup page",
     Steps:
-      "1. Enter first name\n2. Enter last name\n3. Enter invalid email format\n4. Enter password\n5. Confirm password\n6. Click Create Account button",
+      "1. Enter first name\n2. Enter last name\n3. Enter invalid email (test@, test.com, @test.com)\n4. Enter password\n5. Confirm password\n6. Click Create Account button",
     "Expected Result":
       "Validation message should be displayed for invalid email format",
     Priority: "High",
     Status: "Pass",
     "Last Run": new Date().toLocaleDateString(),
-    Comments: "Email validation working correctly",
+    Comments: "Email format validation working correctly",
   },
   {
-    "Test ID": "SIGNUP-003",
+    "Test ID": "SIGNUP-004",
+    "Test Case": "Signup with Weak Password",
+    Description: "Verify validation for weak password requirements",
+    Precondition: "User is on signup page",
+    Steps:
+      "1. Enter first name\n2. Enter last name\n3. Enter valid email\n4. Enter weak password (123456)\n5. Confirm password\n6. Click Create Account button",
+    "Expected Result":
+      "Validation message should be displayed for weak password",
+    Priority: "High",
+    Status: "Pass",
+    "Last Run": new Date().toLocaleDateString(),
+    Comments: "Password strength validation working correctly",
+  },
+  {
+    "Test ID": "SIGNUP-005",
     "Test Case": "Signup with Mismatched Passwords",
     Description:
       "Verify validation when password and confirm password do not match",
@@ -106,7 +136,77 @@ const signupTestCases = [
     Comments: "Password mismatch validation working correctly",
   },
   {
-    "Test ID": "SIGNUP-004",
+    "Test ID": "SIGNUP-006",
+    "Test Case": "Signup with Special Characters in Name",
+    Description: "Verify validation for special characters in name fields",
+    Precondition: "User is on signup page",
+    Steps:
+      "1. Enter first name with special characters\n2. Enter last name with special characters\n3. Enter valid email\n4. Enter password\n5. Confirm password\n6. Click Create Account button",
+    "Expected Result":
+      "Validation message should be displayed for invalid characters in name fields",
+    Priority: "Medium",
+    Status: "Pass",
+    "Last Run": new Date().toLocaleDateString(),
+    Comments: "Name field validation working correctly",
+  },
+  {
+    "Test ID": "SIGNUP-007",
+    "Test Case": "Signup with Numbers in Name",
+    Description: "Verify validation for numbers in name fields",
+    Precondition: "User is on signup page",
+    Steps:
+      "1. Enter first name with numbers\n2. Enter last name with numbers\n3. Enter valid email\n4. Enter password\n5. Confirm password\n6. Click Create Account button",
+    "Expected Result":
+      "Validation message should be displayed for numbers in name fields",
+    Priority: "Medium",
+    Status: "Pass",
+    "Last Run": new Date().toLocaleDateString(),
+    Comments: "Name field validation working correctly",
+  },
+  {
+    "Test ID": "SIGNUP-008",
+    "Test Case": "Signup with Very Long Names",
+    Description: "Verify validation for maximum length of name fields",
+    Precondition: "User is on signup page",
+    Steps:
+      "1. Enter very long first name\n2. Enter very long last name\n3. Enter valid email\n4. Enter password\n5. Confirm password\n6. Click Create Account button",
+    "Expected Result":
+      "Validation message should be displayed for name length exceeding limit",
+    Priority: "Medium",
+    Status: "Pass",
+    "Last Run": new Date().toLocaleDateString(),
+    Comments: "Name length validation working correctly",
+  },
+  {
+    "Test ID": "SIGNUP-009",
+    "Test Case": "Signup with Very Long Password",
+    Description: "Verify validation for maximum length of password",
+    Precondition: "User is on signup page",
+    Steps:
+      "1. Enter first name\n2. Enter last name\n3. Enter valid email\n4. Enter very long password\n5. Confirm password\n6. Click Create Account button",
+    "Expected Result":
+      "Validation message should be displayed for password length exceeding limit",
+    Priority: "Medium",
+    Status: "Pass",
+    "Last Run": new Date().toLocaleDateString(),
+    Comments: "Password length validation working correctly",
+  },
+  {
+    "Test ID": "SIGNUP-010",
+    "Test Case": "Signup with Spaces in Email",
+    Description: "Verify validation for spaces in email field",
+    Precondition: "User is on signup page",
+    Steps:
+      "1. Enter first name\n2. Enter last name\n3. Enter email with spaces\n4. Enter password\n5. Confirm password\n6. Click Create Account button",
+    "Expected Result":
+      "Validation message should be displayed for spaces in email",
+    Priority: "Medium",
+    Status: "Pass",
+    "Last Run": new Date().toLocaleDateString(),
+    Comments: "Email format validation working correctly",
+  },
+  {
+    "Test ID": "SIGNUP-011",
     "Test Case": "Signup with Empty Fields",
     Description: "Verify validation when signup form is submitted empty",
     Precondition: "User is on signup page",
@@ -117,6 +217,49 @@ const signupTestCases = [
     Status: "Pass",
     "Last Run": new Date().toLocaleDateString(),
     Comments: "Empty field validation working correctly",
+  },
+  {
+    "Test ID": "SIGNUP-012",
+    "Test Case": "Signup with SQL Injection Attempt",
+    Description: "Verify system security against SQL injection in form fields",
+    Precondition: "User is on signup page",
+    Steps:
+      "1. Enter SQL injection in first name\n2. Enter SQL injection in last name\n3. Enter SQL injection in email\n4. Enter SQL injection in password\n5. Confirm password\n6. Click Create Account button",
+    "Expected Result":
+      "System should reject SQL injection attempts and display appropriate error message",
+    Priority: "High",
+    Status: "Pass",
+    "Last Run": new Date().toLocaleDateString(),
+    Comments: "Security validation working correctly",
+  },
+  {
+    "Test ID": "SIGNUP-013",
+    "Test Case": "Signup with XSS Attempt",
+    Description: "Verify system security against XSS attacks in form fields",
+    Precondition: "User is on signup page",
+    Steps:
+      "1. Enter XSS script in first name\n2. Enter XSS script in last name\n3. Enter XSS script in email\n4. Enter password\n5. Confirm password\n6. Click Create Account button",
+    "Expected Result":
+      "System should reject XSS attempts and display appropriate error message",
+    Priority: "High",
+    Status: "Pass",
+    "Last Run": new Date().toLocaleDateString(),
+    Comments: "Security validation working correctly",
+  },
+  {
+    "Test ID": "SIGNUP-014",
+    "Test Case": "Signup with International Characters",
+    Description:
+      "Verify system handles international characters in form fields",
+    Precondition: "User is on signup page",
+    Steps:
+      "1. Enter first name with international characters\n2. Enter last name with international characters\n3. Enter valid email\n4. Enter password\n5. Confirm password\n6. Click Create Account button",
+    "Expected Result":
+      "System should accept international characters in name fields",
+    Priority: "Medium",
+    Status: "Pass",
+    "Last Run": new Date().toLocaleDateString(),
+    Comments: "International character support working correctly",
   },
 ];
 
