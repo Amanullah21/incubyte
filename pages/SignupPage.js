@@ -15,9 +15,10 @@ class SignupPage {
   
     async fillSignupForm() {
       const timestamp = Date.now();
+      this.generatedEmail = `testuser${timestamp}@example.com`;
       await this.firstName.fill('Test');
       await this.lastName.fill('User');
-      await this.email.fill(`testuser${timestamp}@example.com`);
+      await this.email.fill(this.generatedEmail);
       await this.password.fill('Test@1234');
       await this.confirmPassword.fill('Test@1234');
     }
@@ -37,4 +38,3 @@ class SignupPage {
   }
   
   module.exports = SignupPage;
-  

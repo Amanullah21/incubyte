@@ -1,30 +1,31 @@
-const { Given, When, Then, After } = require('@cucumber/cucumber');
-const { chromium } = require('playwright');
-const LoginPage = require('../../pages/LoginPage');
-const { expect } = require('chai');
+const { Given, When, Then, After } = require("@cucumber/cucumber");
+const LoginPage = require("../../pages/LoginPage");
+const fs = require("fs");
+const path = require("path");
+const { expect } = require("chai");
 
-let browser, page, loginPage;
+let loginPage;
 
-Given('I am on the login page', async () => {
-  browser = await chromium.launch({ headless: false });
-  const context = await browser.newContext({ recordVideo: { dir: 'videos/' } });
-  page = await context.newPage();
-  loginPage = new LoginPage(page);
+Given("I am on the login page", async function () {
+  loginPage = new LoginPage(this.page);
   await loginPage.goto();
 });
 
-When('I enter valid login credentials', async () => {
-  await loginPage.enterCredentials();
+When("I enter valid login credentials", async function () {
+  const userFile = path.resolve(__dirname, "../../test-data/users.json");
+  const rawData = fs.readFileSync(userFile);
+  const userData = JSON.parse(rawData);
+  await loginPage.enterCredentials(userData);
 });
 
-When('I click the login button', async () => {
+When("I click the login button", async function () {
   await loginPage.submit();
 });
 
-Then('I should be redirected to my account dashboard', async () => {
+Then("I should be redirected to my account dashboard", async function () {
   const result = await loginPage.verifyLogin();
   expect(result).to.be.true;
-  await page.screenshot({ path: 'screenshots/login-success.png' });
+  await this.page.screenshot({ path: "screenshots/login-success.png" });
 });
 
 After(async () => {

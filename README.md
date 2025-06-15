@@ -17,7 +17,7 @@ npx cucumber-js
 ```
 
 ## Login Test
-Before running login test, update the test-data/users.json file with valid user credentials.
+The signup test will auto-save the user credentials to `test-data/users.json`. Run login test after signup.
 ```bash
 npx cucumber-js features/login.feature
 ```
