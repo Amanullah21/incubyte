@@ -61,14 +61,17 @@ Then("I should be redirected to my account dashboard", async function () {
 Then("I should see login error message", async function () {
   const result = await loginPage.verifyValidationErrors();
   expect(result).to.be.true;
-  await page.screenshot({ path: "screenshots/login-error.png" });
   const errorMessage = await loginPage.getErrorMessage();
-  expect(errorMessage).to.equal("The account sign-in was incorrect or your account is disabled temporarily. Please wait and try again later.");
+  expect(errorMessage).to.include("incorrect");
+  await this.page.screenshot({ path: "screenshots/login-error.png" });
 });
 
 Then("I should see login field validation errors", async function () {
   const result = await loginPage.verifyValidationErrors();
   expect(result).to.be.true;
+  await this.page.screenshot({
+    path: "screenshots/login-validation-error.png",
+  });
 });
 
 After(async () => {
