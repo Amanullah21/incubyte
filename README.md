@@ -202,7 +202,7 @@ Each test case includes:
 - And more...
 
 
-## project Explanation
+## Project Explanation
  - https://drive.google.com/file/d/1RkfiYHx3_HgVs2uIgtkX3LuUVLjnTFf-/view?usp=drive_link
 ## 📞 Support
 
