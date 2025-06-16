@@ -92,7 +92,7 @@ magento-playwright-tests/
 
 ### Test Data
 
-- Test data is stored in `test-data/users.json`
+- Test data is stored in `test-data/users.json` and verify with login
 - Update this file with valid test credentials
 
 ### Test Reports
@@ -201,6 +201,9 @@ Each test case includes:
 - Signup with Mismatched Passwords
 - And more...
 
+
+## project Explanation
+ - https://drive.google.com/file/d/1RkfiYHx3_HgVs2uIgtkX3LuUVLjnTFf-/view?usp=drive_link
 ## 📞 Support
 
 - 7070476900
