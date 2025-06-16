@@ -17,33 +17,57 @@ class SignupPage {
   async goto(retries = 3) {
     for (let i = 0; i < retries; i++) {
       try {
-        // First try to go to the home page
+        // First try to go to the home page with increased timeout
         await this.page.goto("https://magento.softwaretestingboard.com/", {
-          waitUntil: "networkidle",
-          timeout: 30000,
+          waitUntil: "domcontentloaded",
+          timeout: 60000,
         });
 
-        // Then navigate to the signup page
+        // Wait for any initial network activity to complete
+        await this.page
+          .waitForLoadState("networkidle", { timeout: 30000 })
+          .catch(() => {});
+
+        // Then navigate to the signup page with increased timeout
         await this.page.goto(
           "https://magento.softwaretestingboard.com/customer/account/create/",
           {
-            waitUntil: "networkidle",
-            timeout: 30000,
+            waitUntil: "domcontentloaded",
+            timeout: 60000,
           }
         );
 
-        // Verify we're on the signup page
-        await this.page.waitForSelector("#firstname", { timeout: 5000 });
+        // Wait for any network activity to complete
+        await this.page
+          .waitForLoadState("networkidle", { timeout: 30000 })
+          .catch(() => {});
+
+        // Verify we're on the signup page with increased timeout
+        await this.page.waitForSelector("#firstname", {
+          state: "visible",
+          timeout: 30000,
+        });
+
+        // Additional check to ensure the page is fully loaded
+        await this.page
+          .waitForLoadState("domcontentloaded", { timeout: 30000 })
+          .catch(() => {});
+
         return;
       } catch (error) {
         console.log(`Attempt ${i + 1} failed: ${error.message}`);
         if (i === retries - 1) {
+          // Take screenshot on final failure
+          await this.page.screenshot({
+            path: `screenshots/navigation-error-attempt-${i + 1}.png`,
+            fullPage: true,
+          });
           throw new Error(
             `Failed to navigate to signup page after ${retries} attempts: ${error.message}`
           );
         }
-        // Wait before retrying
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        // Wait longer before retrying
+        await new Promise((resolve) => setTimeout(resolve, 5000));
       }
     }
   }

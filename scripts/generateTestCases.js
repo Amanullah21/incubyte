@@ -287,9 +287,9 @@ const wscols = [
 loginSheet["!cols"] = wscols;
 signupSheet["!cols"] = wscols;
 
-// Add worksheets to workbook
-XLSX.utils.book_append_sheet(workbook, loginSheet, "Login Test Cases");
+// Add worksheets to workbook - Signup sheet first, then Login sheet
 XLSX.utils.book_append_sheet(workbook, signupSheet, "Signup Test Cases");
+XLSX.utils.book_append_sheet(workbook, loginSheet, "Login Test Cases");
 
 // Write to file
 XLSX.writeFile(workbook, "test-cases.xlsx");

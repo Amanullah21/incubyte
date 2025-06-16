@@ -156,37 +156,50 @@ If you encounter issues:
 
 ## 📊 Generating Test Sheets
 
-###  Using Test Case Generator Script
+### Using Test Case Generator Script
 
-1. Install required dependencies:
-
-```bash
-npm install @cucumber/gherkin @cucumber/messages --save-dev
-```
-
-2. Run the generator script:
+1. Run the generator script:
 
 ```bash
-node scripts/generate-test-cases.js
+node scripts/generateTestCases.js
 ```
 
-3. The script will:
-   - Read all `.feature` files
-   - Generate test cases automatically
-   - Create CSV files in `test-cases/` directory
-   - Name format: `[feature-name]-test-cases.csv`
+2. The script will generate `test-cases.xlsx` with two sheets:
+   - Signup Test Cases (opens by default)
+   - Login Test Cases
 
-### Test Case Format Example
+### Test Case Format
 
-```csv
-Test Case ID,Test Scenario,Test Steps,Test Data,Expected Result,Status
-TC001,Valid Login,1. Navigate to login page
-2. Enter valid email
-3. Enter valid password
-4. Click login button,Email: test@example.com
-Password: Test123!,User should be redirected to dashboard,Not Run
-```
+Each test case includes:
 
+- Test ID
+- Test Case
+- Description
+- Precondition
+- Steps
+- Expected Result
+- Priority
+- Status
+- Last Run
+- Comments
+
+### Example Test Cases
+
+#### Login Test Cases
+
+- Successful Login
+- Login with Invalid Password
+- Login with Unregistered Email
+- Login with Empty Fields
+
+#### Signup Test Cases
+
+- Successful Signup with Valid Data
+- Signup with Existing Email
+- Signup with Invalid Email Format
+- Signup with Weak Password
+- Signup with Mismatched Passwords
+- And more...
 
 ## 📞 Support
 
