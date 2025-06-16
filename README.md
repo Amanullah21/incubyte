@@ -39,59 +39,6 @@ cd magento-playwright-tests
 npm install
 ```
 
-## 📊 Generating Test Sheets
-
-### Method 1: Using Google Sheets
-
-1. Create a new Google Sheet
-2. Add the following columns:
-   - Test Case ID
-   - Test Scenario
-   - Test Steps
-   - Test Data
-   - Expected Result
-   - Status
-3. Copy the test scenarios from your feature files
-4. Save the sheet and share with your team
-
-### Method 2: Using Excel/CSV
-
-1. Create a new Excel file or CSV
-2. Add the same columns as above
-3. Export as CSV to `test-cases/` directory
-4. Name format: `[feature-name]-test-cases.csv`
-
-### Method 3: Using Test Case Generator Script
-
-1. Install required dependencies:
-
-```bash
-npm install @cucumber/gherkin @cucumber/messages --save-dev
-```
-
-2. Run the generator script:
-
-```bash
-node scripts/generate-test-cases.js
-```
-
-3. The script will:
-   - Read all `.feature` files
-   - Generate test cases automatically
-   - Create CSV files in `test-cases/` directory
-   - Name format: `[feature-name]-test-cases.csv`
-
-### Test Case Format Example
-
-```csv
-Test Case ID,Test Scenario,Test Steps,Test Data,Expected Result,Status
-TC001,Valid Login,1. Navigate to login page
-2. Enter valid email
-3. Enter valid password
-4. Click login button,Email: test@example.com
-Password: Test123!,User should be redirected to dashboard,Not Run
-```
-
 ## 🏃‍♂️ Running Tests
 
 ### Run All Tests
@@ -206,6 +153,40 @@ If you encounter issues:
    - "Invalid Form Key": Refresh the page and retry
    - "Element not found": Check selectors in page objects
    - "Timeout": Increase timeout in cucumber.js
+
+## 📊 Generating Test Sheets
+
+###  Using Test Case Generator Script
+
+1. Install required dependencies:
+
+```bash
+npm install @cucumber/gherkin @cucumber/messages --save-dev
+```
+
+2. Run the generator script:
+
+```bash
+node scripts/generate-test-cases.js
+```
+
+3. The script will:
+   - Read all `.feature` files
+   - Generate test cases automatically
+   - Create CSV files in `test-cases/` directory
+   - Name format: `[feature-name]-test-cases.csv`
+
+### Test Case Format Example
+
+```csv
+Test Case ID,Test Scenario,Test Steps,Test Data,Expected Result,Status
+TC001,Valid Login,1. Navigate to login page
+2. Enter valid email
+3. Enter valid password
+4. Click login button,Email: test@example.com
+Password: Test123!,User should be redirected to dashboard,Not Run
+```
+
 
 ## 📞 Support
 
